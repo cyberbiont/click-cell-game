@@ -1,0 +1,48 @@
+<div class="game-container">
+  <div class="controls">
+    <div class="input-group">
+      <label for="timeInput">Time (ms):</label>
+      <input 
+        id="timeInput"
+        type="number" 
+        [(ngModel)]="timeLimit" 
+        [disabled]="gameActive()"
+        min="100"
+        step="100"
+      />
+    </div>
+    <button (click)="startGame()" [disabled]="gameActive()">Start</button>
+  </div>
+
+  <div class="score-board">
+    <div class="score">Player: {{ playerScore() }}</div>
+    <div class="score">Computer: {{ computerScore() }}</div>
+  </div>
+
+  <div class="grid">
+    @for (cell of cells(); track $index) {
+      <div 
+        class="cell" 
+        [class.blue]="cell === 'blue'"
+        [class.yellow]="cell === 'yellow'"
+        [class.green]="cell === 'green'"
+        [class.red]="cell === 'red'"
+        (click)="onCellClick($index)"
+      ></div>
+    }
+  </div>
+</div>
+
+@if (showModal()) {
+  <div class="modal-overlay" (click)="closeModal()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Game Over!</h2>
+      <p class="winner">{{ winner() }} Wins!</p>
+      <div class="final-score">
+        <p>Player: {{ playerScore() }}</p>
+        <p>Computer: {{ computerScore() }}</p>
+      </div>
+      <button (click)="closeModal()">Close</button>
+    </div>
+  </div>
+}
