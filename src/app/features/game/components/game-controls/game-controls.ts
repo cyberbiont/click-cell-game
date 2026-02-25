@@ -1,25 +1,25 @@
-import { Component, input, output, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { TitleCasePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { GameService } from '../../services/game.service';
+import { Side } from '../../game.models';
 
 @Component({
   selector: 'app-game-controls',
-  imports: [FormsModule],
+  imports: [FormsModule, TitleCasePipe],
   templateUrl: './game-controls.html',
-  styleUrl: './game-controls.css'
+  styleUrl: './game-controls.css',
 })
 export class GameControls {
-  gameActive = input.required<boolean>();
-  playerScore = input.required<number>();
-  computerScore = input.required<number>();
-  start = output<number>();
+  private readonly gameService = inject(GameService);
 
-  timeInput = signal(1000);
+  protected readonly Side = Side;
+
+  timeLimit = signal(this.gameService.timeLimit());
+  isGameActive = this.gameService.isGameActive;
+  score = this.gameService.score;
 
   onStart() {
-    if (this.timeInput() <= 0) {
-      alert('Please enter a valid time in milliseconds (greater than 0)');
-      return;
-    }
-    this.start.emit(this.timeInput());
+    this.gameService.startGame(this.timeLimit());
   }
 }

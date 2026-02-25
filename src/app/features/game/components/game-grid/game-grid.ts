@@ -1,16 +1,22 @@
-import { Component, input, output } from '@angular/core';
-import type { CellState } from '../../pages/game/game';
+import { Component, inject } from '@angular/core';
+
+import { GameCell } from '../../game.models';
+import { GameGridCell } from '../game-grid-cell/game-grid-cell';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-grid',
+  imports: [GameGridCell],
   templateUrl: './game-grid.html',
-  styleUrl: './game-grid.css'
+  styleUrl: './game-grid.css',
 })
 export class GameGrid {
-  cells = input.required<CellState[]>();
-  cellClick = output<number>();
+  private readonly gameService = inject(GameService);
 
-  onCellClick(index: number) {
-    this.cellClick.emit(index);
+  protected cells = this.gameService.cells;
+  protected isGameActive = this.gameService.isGameActive;
+
+  onCellClick(cell: GameCell) {
+    this.gameService.handleCellClick(cell);
   }
 }

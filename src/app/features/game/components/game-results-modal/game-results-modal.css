@@ -26,6 +26,20 @@
   text-align: center;
   animation: slideUp 0.3s;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  h2 {
+    margin: 0 0 20px 0;
+    color: #333;
+    font-size: 2rem;
+  }
+
+  @media (max-width: 600px) {
+    padding: 30px 20px;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+  }
 }
 
 @keyframes slideUp {
@@ -39,17 +53,15 @@
   }
 }
 
-.modal h2 {
-  margin: 0 0 20px 0;
-  color: #333;
-  font-size: 2rem;
-}
-
 .winner-text {
   font-size: 1.5rem;
   font-weight: 700;
   color: #667eea;
   margin: 0 0 25px 0;
+
+  @media (max-width: 600px) {
+    font-size: 1.2rem;
+  }
 }
 
 .final-score {
@@ -57,12 +69,12 @@
   padding: 20px;
   border-radius: 8px;
   margin-bottom: 25px;
-}
 
-.final-score p {
-  margin: 10px 0;
-  font-size: 1.1rem;
-  color: #555;
+  p {
+    margin: 10px 0;
+    font-size: 1.1rem;
+    color: #555;
+  }
 }
 
 .close-btn {
@@ -75,27 +87,13 @@
   font-weight: 600;
   cursor: pointer;
   transition: background 0.3s, transform 0.1s;
-}
 
-.close-btn:hover {
-  background: #5568d3;
-  transform: translateY(-2px);
-}
-
-.close-btn:active {
-  transform: translateY(0);
-}
-
-@media (max-width: 600px) {
-  .modal {
-    padding: 30px 20px;
+  &:hover {
+    background: #5568d3;
+    transform: translateY(-2px);
   }
 
-  .modal h2 {
-    font-size: 1.5rem;
-  }
-
-  .winner-text {
-    font-size: 1.2rem;
+  &:active {
+    transform: translateY(0);
   }
 }

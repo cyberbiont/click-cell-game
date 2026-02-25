@@ -1,0 +1,56 @@
+.cell {
+  aspect-ratio: 1;
+  border-radius: 0.25em;
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
+  border: none;
+  padding: 0;
+  width: 100%;
+
+  &:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 0.125em 0.5em rgba(0, 0, 0, 0.2);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  /* If we were using SCSS, we could assign colors in a loop based on a map configuration object other than hardcoding them here */
+
+  &[data-status='untouched'] {
+    background: #3b82f6;
+  }
+
+  &[data-status='active'] {
+    background: #fbbf24;
+    animation: pulse 0.5s infinite;
+  }
+
+  &[data-status='player'] {
+    background: #10b981;
+  }
+
+  &[data-status='computer'] {
+    background: #ef4444;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 400px) {
+  .cell {
+    border-radius: 0.125em;
+  }
+}

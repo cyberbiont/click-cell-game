@@ -5,30 +5,27 @@
     <input
       id="timeInput"
       type="number"
-      [(ngModel)]="timeInput"
-      [disabled]="gameActive()"
+      [(ngModel)]="timeLimit"
+      [disabled]="isGameActive()"
       min="1"
       placeholder="Enter milliseconds"
     />
   </div>
 
-  <button
-    class="start-btn"
-    (click)="onStart()"
-    [disabled]="gameActive()"
-  >
+  <button class="start-btn" type="button" (click)="onStart()" [disabled]="isGameActive()">
     Start
   </button>
 </div>
 
 <div class="score-board">
+  <!-- TODO A separate component can be used here -->
   <div class="score">
-    <span class="label">Player:</span>
-    <span class="value">{{ playerScore() }}</span>
+    <span class="label">{{ Side.PLAYER | titlecase }}:</span>
+    <span class="value">{{ score.player() }}</span>
   </div>
 
   <div class="score">
-    <span class="label">Computer:</span>
-    <span class="value">{{ computerScore() }}</span>
+    <span class="label">{{ Side.COMPUTER | titlecase }}:</span>
+    <span class="value">{{ score.computer() }}</span>
   </div>
 </div>
