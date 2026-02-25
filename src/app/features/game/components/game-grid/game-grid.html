@@ -1,0 +1,9 @@
+<div class="grid">
+  @for (cell of cells(); track $index) {
+    <div 
+      class="cell"
+      [class]="cell"
+      (click)="onCellClick($index)"
+    ></div>
+  }
+</div>

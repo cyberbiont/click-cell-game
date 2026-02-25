@@ -1,0 +1,16 @@
+@if (show()) {
+  <div class="modal-overlay" (click)="onClose()">
+    <div class="modal" (click)="$event.stopPropagation()">
+      <h2>Game Over!</h2>
+
+      <p class="winner-text">{{ winner() }} Wins!</p>
+
+      <div class="final-score">
+        <p>Player: {{ playerScore() }}</p>
+        <p>Computer: {{ computerScore() }}</p>
+      </div>
+
+      <button class="close-btn" (click)="onClose()">Close</button>
+    </div>
+  </div>
+}

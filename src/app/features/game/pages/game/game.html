@@ -1,0 +1,23 @@
+<div class="game-container">
+  <h1>Mini-Game</h1>
+  
+  <app-game-controls
+    [gameActive]="gameActive()"
+    [playerScore]="playerScore()"
+    [computerScore]="computerScore()"
+    (start)="onStart($event)"
+  />
+
+  <app-game-grid
+    [cells]="cells()"
+    (cellClick)="onCellClick($event)"
+  />
+
+  <app-game-results-modal
+    [show]="showModal()"
+    [winner]="winner()"
+    [playerScore]="playerScore()"
+    [computerScore]="computerScore()"
+    (close)="onCloseModal()"
+  />
+</div>

@@ -1,0 +1,34 @@
+<div class="controls">
+  <div class="input-group">
+    <label for="timeInput">Time (ms):</label>
+
+    <input
+      id="timeInput"
+      type="number"
+      [(ngModel)]="timeInput"
+      [disabled]="gameActive()"
+      min="1"
+      placeholder="Enter milliseconds"
+    />
+  </div>
+
+  <button
+    class="start-btn"
+    (click)="onStart()"
+    [disabled]="gameActive()"
+  >
+    Start
+  </button>
+</div>
+
+<div class="score-board">
+  <div class="score">
+    <span class="label">Player:</span>
+    <span class="value">{{ playerScore() }}</span>
+  </div>
+
+  <div class="score">
+    <span class="label">Computer:</span>
+    <span class="value">{{ computerScore() }}</span>
+  </div>
+</div>
