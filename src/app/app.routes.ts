@@ -9,6 +9,8 @@ export default [
       provideGameConfig({
         gridSize: 10,
         defaultTimeLimitMs: 1000,
+        minTimeLimitMs: 100,
+        maxTimeLimitMs: 2000,
         winningScore: 10,
       }),
     ],

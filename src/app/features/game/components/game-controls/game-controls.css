@@ -1,15 +1,19 @@
-:host {
+.form {
   display: grid;
   gap: 1em;
   place-content: center;
-
-  /* color: var(color-text); */
 }
 
 .field {
   display: flex;
   align-items: center;
   gap: 1em;
+  flex-wrap: wrap;
+}
+
+.input--validated {
+  display: grid;
+  gap: 0.5em;
 }
 
 .Timeout input {
@@ -18,4 +22,14 @@
   border-radius: 0.5em;
   width: 12ch;
   transition: border-color 0.3s;
+
+  &:invalid {
+    border-color: #ef4444;
+  }
+}
+
+.error {
+  color: #ef4444;
+  font-size: 0.875rem;
+  flex-basis: 100%;
 }

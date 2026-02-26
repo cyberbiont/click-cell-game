@@ -1,6 +1,6 @@
 import { GAME_CONFIG, GameConfig } from '../game.config';
 import { GameCellModel, GameCellStatus, Side } from '../game.models';
-import { Injectable, inject, isDevMode, signal } from '@angular/core';
+import { Injectable, OnDestroy, inject, isDevMode, signal } from '@angular/core';
 
 import { getRandomArrayElement } from '@core/utils/helpers';
 
@@ -14,7 +14,7 @@ export type GameRoundResult = {
 };
 
 @Injectable()
-export class GameService {
+export class GameService implements OnDestroy {
   private readonly cfg = this.validateConfig(inject(GAME_CONFIG));
 
   readonly cells = this.initializeCells();
@@ -37,6 +37,7 @@ export class GameService {
   private timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
   startGame(timeLimit: number) {
+    this.clearTimer();
     this.timeLimit.set(timeLimit);
     this.resetGame();
     this.isGameRoundActive.set(true);
@@ -59,6 +60,7 @@ export class GameService {
   }
 
   private resetGame() {
+    this.clearTimer();
     this.isModalVisible.set(false);
     this.currentRoundResult.set(null);
     this.cells.forEach((cell) => (cell.status = GameCellStatus.UNTOUCHED));
@@ -90,7 +92,7 @@ export class GameService {
     if (!this.activeCell || cell.status !== GameCellStatus.ACTIVE) return; // wrong cell clicked
     // we can also compare directly this.activeCell === cell
 
-    clearTimeout(this.timer);
+    this.clearTimer();
 
     this.updateCellStatus(cell, GameCellStatus.PLAYER);
     this.score.player.update((s) => s + 1);
@@ -113,7 +115,7 @@ export class GameService {
 
     this.currentRoundResult.set(result);
 
-    clearTimeout(this.timer);
+    this.clearTimer();
 
     this.openModal();
   }
@@ -145,18 +147,24 @@ export class GameService {
    */
   private validateConfig(config: GameConfig): GameConfig {
     const gridSize = Number.isInteger(config.gridSize) && config.gridSize >= 1 ? config.gridSize : 5;
-    const defaultTimeLimitMs = config.defaultTimeLimitMs >= 100 ? config.defaultTimeLimitMs : 1000;
+    const minTimeLimitMs = config.minTimeLimitMs >= 100 ? config.minTimeLimitMs : 100;
+    const maxTimeLimitMs = config.maxTimeLimitMs >= minTimeLimitMs ? config.maxTimeLimitMs : 2000;
+    const defaultTimeLimitMs = config.defaultTimeLimitMs >= minTimeLimitMs && config.defaultTimeLimitMs <= maxTimeLimitMs
+      ? config.defaultTimeLimitMs
+      : 1000;
     const maxScore = gridSize * gridSize;
     const winningScore = Number.isInteger(config.winningScore) && config.winningScore >= 1 && config.winningScore <= maxScore
       ? config.winningScore
       : 10;
 
-    const validated = { gridSize, defaultTimeLimitMs, winningScore };
+    const validated = { gridSize, defaultTimeLimitMs, minTimeLimitMs, maxTimeLimitMs, winningScore };
 
     if (
       isDevMode() &&
       (config.gridSize !== gridSize ||
         config.defaultTimeLimitMs !== defaultTimeLimitMs ||
+        config.minTimeLimitMs !== minTimeLimitMs ||
+        config.maxTimeLimitMs !== maxTimeLimitMs ||
         config.winningScore !== winningScore)
     ) {
       console.warn(
@@ -166,5 +174,16 @@ export class GameService {
     }
 
     return validated;
+  }
+
+  private clearTimer(): void {
+    if (this.timer !== undefined) {
+      clearTimeout(this.timer);
+      this.timer = undefined;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearTimer();
   }
 }

@@ -1,22 +1,43 @@
-<div class="Timeout field">
-  <label for="timeInput">Timeout (ms):</label>
+<form class="form" (ngSubmit)="onStart()" #gameForm="ngForm">
+  <div class="Timeout field">
+    <label for="timeInput">Timeout (ms, {{ minTimeout }}-{{ maxTimeout }}):</label>
 
-  <input
-    id="timeInput"
-    type="number"
-    [(ngModel)]="timeLimit"
-    [disabled]="isGameActive()"
-    min="1"
-    placeholder="Enter timeout in milliseconds"
-  />
-</div>
+    <div class="input--validated">
+      <input
+        id="timeInput"
+        type="number"
+        [(ngModel)]="timeLimit"
+        name="timeLimit"
+        #timeLimitInput="ngModel"
+        [disabled]="isGameActive()"
+        [min]="minTimeout"
+        [max]="maxTimeout"
+        required
+        placeholder="Enter timeout in milliseconds"
+      />
 
-<button
-  class="btn btn--start"
-  type="button"
-  (click)="onStart()"
-  [disabled]="isGameActive()"
-  aria-label="Start game"
->
-  Start
-</button>
+      @if (timeLimitInput.invalid && timeLimitInput.touched) {
+        <small class="error">
+          @if (timeLimitInput.errors?.['required']) {
+            Timeout is required
+          }
+          @if (timeLimitInput.errors?.['min']) {
+            Minimum value is {{ minTimeout }}ms
+          }
+          @if (timeLimitInput.errors?.['max']) {
+            Maximum value is {{ maxTimeout }}ms
+          }
+        </small>
+      }
+    </div>
+  </div>
+
+  <button
+    class="btn btn--start"
+    type="submit"
+    [disabled]="isGameActive() || gameForm.invalid"
+    aria-label="Start game"
+  >
+    Start
+  </button>
+</form>

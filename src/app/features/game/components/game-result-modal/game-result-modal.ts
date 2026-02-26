@@ -21,7 +21,7 @@ export class GameResultModal {
 
   result = input.required<GameRoundResult>();
 
-  handleCloseRequest() {
+  protected handleCloseRequest() {
     this.gameService.closeModal();
   }
 }

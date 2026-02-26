@@ -11,7 +11,7 @@ import { Component, output } from '@angular/core';
 export class ModalWrapper {
   closeRequested = output<void>();
 
-  onOverlayClick() {
+  protected onOverlayClick() {
     this.closeRequested.emit();
   }
 }

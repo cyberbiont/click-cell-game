@@ -27,7 +27,7 @@ export class GameCell {
     }
   });
 
-  onClick() {
+  protected onClick() {
     this.cellClicked.emit(this.cell());
   }
 }
