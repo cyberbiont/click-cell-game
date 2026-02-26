@@ -1,4 +1,4 @@
-import { Component, input, output, computed } from '@angular/core';
+import { Component, computed, input, output } from '@angular/core';
 import { GameCellModel, GameCellStatus, Side } from '../../game.models';
 
 /* this component is designed to be dumb */
@@ -14,10 +14,17 @@ export class GameCell {
 
   protected ariaLabel = computed(() => {
     const { status, id } = this.cell();
-    if (status === GameCellStatus.PLAYER) return `Cell ${id}, claimed by ${Side.PLAYER}`;
-    if (status === GameCellStatus.COMPUTER) return `Cell ${id}, claimed by ${Side.COMPUTER}`;
-    if (status === GameCellStatus.ACTIVE) return `Cell ${id}, active target`;
-    return `Cell ${id}, click to claim`;
+
+    switch (status) {
+      case GameCellStatus.PLAYER:
+        return `Cell ${id}, claimed by ${Side.PLAYER}`;
+      case GameCellStatus.COMPUTER:
+        return `Cell ${id}, claimed by ${Side.COMPUTER}`;
+      case GameCellStatus.ACTIVE:
+        return `Cell ${id}, active target, click before iime is out to score`;
+      default:
+        return `Cell ${id}`;
+    }
   });
 
   onClick() {
