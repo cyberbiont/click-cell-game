@@ -7,7 +7,9 @@
 
   <app-game-grid />
 
-  @if (isModalVisible()) {
-    <app-game-results-modal />
+  @let result = lastRoundResult();
+
+  @if (isModalVisible() && result) {
+    <app-game-result-modal [result]="result" />
   }
 </div>

@@ -1,4 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
+
 import { FormsModule } from '@angular/forms';
 import { GameService } from '../../services/game.service';
 
@@ -12,7 +13,7 @@ export class GameControls {
   private readonly gameService = inject(GameService);
 
   protected readonly timeLimit = signal(this.gameService.timeLimit());
-  protected readonly isGameActive = this.gameService.isGameActive;
+  protected readonly isGameActive = this.gameService.isGameRoundActive;
 
   onStart() {
     this.gameService.startGame(this.timeLimit());

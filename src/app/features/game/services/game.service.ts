@@ -4,6 +4,15 @@ import { Injectable, inject, signal } from '@angular/core';
 import { GAME_CONFIG } from '../game.config';
 import { getRandomArrayElement } from '@core/utils/helpers';
 
+export type GameRoundResult = {
+  winner: Side;
+  score: {
+    [Side.PLAYER]: number;
+    [Side.COMPUTER]: number;
+  };
+  // can add more data here like best result (if we measure total time it took to win)
+};
+
 @Injectable()
 export class GameService {
   private readonly cfg = inject(GAME_CONFIG);
@@ -15,21 +24,30 @@ export class GameService {
     computer: signal(0),
   } as const;
 
+  readonly gameRoundsHistory: GameRoundResult[] = []; // TODO game rounds history can be used to calculate statistics, or calculate absolute winner based on who won 5 rounds first
+
   readonly timeLimit = signal(this.cfg.defaultTimeLimitMs);
 
-  readonly isGameActive = signal(false);
+  readonly isGameRoundActive = signal(false);
+
   readonly isModalVisible = signal(false);
-  readonly winner = signal<Side | ''>('');
+  readonly lastRoundResult = signal<GameRoundResult | null>(null);
 
   private currentCell = -1;
   private timer: any;
-  
 
   startGame(timeLimit: number) {
     this.timeLimit.set(timeLimit);
     this.resetGame();
-    this.isGameActive.set(true);
+    this.isGameRoundActive.set(true);
     this.highlightRandomCell();
+  }
+
+  private getFinalScore() {
+    return {
+      [Side.PLAYER]: this.score.player(),
+      [Side.COMPUTER]: this.score.computer(),
+    };
   }
 
   handleCellClick(cell: GameCell) {
@@ -42,10 +60,17 @@ export class GameService {
     this.score.player.update((s) => s + 1);
 
     if (this.score.player() === this.cfg.winningScore) {
-      this.endGame(Side.PLAYER);
+      this.endGame({
+        winner: Side.PLAYER,
+        score: this.getFinalScore(),
+      });
     } else {
       this.highlightRandomCell();
     }
+  }
+
+  openModal() {
+    this.isModalVisible.set(true);
   }
 
   closeModal() {
@@ -53,10 +78,10 @@ export class GameService {
   }
 
   private resetGame() {
+    this.isModalVisible.set(false);
     this.cells.set(this.initializeCells());
     this.score.player.set(0);
     this.score.computer.set(0);
-    this.isModalVisible.set(false);
   }
 
   private initializeCells(): GameCell[] {
@@ -67,7 +92,7 @@ export class GameService {
   }
 
   private highlightRandomCell() {
-    if (!this.isGameActive()) return;
+    if (!this.isGameRoundActive()) return;
 
     const availableCells = this.cells()
       .map((cell, idx) => (cell.status === GameCellStatus.UNTOUCHED ? idx : -1))
@@ -92,16 +117,21 @@ export class GameService {
     this.score.computer.update((s) => s + 1);
 
     if (this.score.computer() === this.cfg.winningScore) {
-      this.endGame(Side.COMPUTER);
+      this.endGame({
+        winner: Side.COMPUTER,
+        score: this.getFinalScore(),
+      });
     } else {
       this.highlightRandomCell();
     }
   }
 
-  private endGame(winner: Side) {
-    this.isGameActive.set(false);
-    this.winner.set(winner);
-    this.isModalVisible.set(true);
+  private endGame(result: GameRoundResult) {
+    this.isGameRoundActive.set(false);
+    this.gameRoundsHistory.push(result);
+
+    this.lastRoundResult.set(result);
+    this.openModal();
     clearTimeout(this.timer);
   }
 }

@@ -1,23 +1,22 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
+import { GameRoundResult, GameService } from '../../services/game.service';
 
-import { GameService } from '../../services/game.service';
 import { ModalWrapper } from '@shared/components/modal-wrapper/modal-wrapper';
 import { Side } from '../../game.models';
 import { TitleCasePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-game-results-modal',
+  selector: 'app-game-result-modal',
   imports: [ModalWrapper, TitleCasePipe],
-  templateUrl: './game-results-modal.html',
-  styleUrl: './game-results-modal.css',
+  templateUrl: './game-result-modal.html',
+  styleUrl: './game-result-modal.css',
 })
-export class GameResultsModal {
+export class GameResultModal {
   private readonly gameService = inject(GameService);
 
   protected readonly Side = Side;
 
-  protected readonly winner = this.gameService.winner;
-  protected readonly score = this.gameService.score;
+  result = input.required<GameRoundResult>();
 
   handleCloseRequest() {
     this.gameService.closeModal();
