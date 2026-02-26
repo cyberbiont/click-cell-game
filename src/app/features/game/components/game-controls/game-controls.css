@@ -12,8 +12,7 @@
 }
 
 .input--validated {
-  display: grid;
-  gap: 0.5em;
+  position: relative;
 }
 
 .Timeout input {
@@ -28,8 +27,37 @@
   }
 }
 
-.error {
-  color: #ef4444;
-  font-size: 0.875rem;
-  flex-basis: 100%;
+.error-tooltip {
+  position: absolute;
+  top: calc(100% + 0.5em);
+  left: 0;
+  background: #ef4444;
+  color: white;
+  padding: 0.5em 0.75em;
+  border-radius: 0.375em;
+  font-size: 0.8em;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 10;
+  animation: fadeIn 0.2s ease-in;
+
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 1em;
+    border: thin solid transparent;
+    border-bottom-color: #ef4444;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-0.25em);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
