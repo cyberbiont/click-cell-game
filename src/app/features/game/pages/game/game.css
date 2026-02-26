@@ -30,10 +30,32 @@
 }
 
 .ScoreBoard {
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: auto 1fr auto;
+  grid-template-areas: 'player controls computer';
   align-items: center;
   padding: 0.5rem;
   background: #f8f9fa;
   border-radius: 0.5em;
+
+  .player {
+    grid-area: player;
+  }
+
+  .controls {
+    grid-area: controls;
+  }
+
+  .computer {
+    grid-area: computer;
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'controls controls'
+      'player computer';
+    gap: 1.5rem;
+  }
 }

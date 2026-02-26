@@ -1,8 +1,8 @@
 <div class="Game">
   <div class="ScoreBoard">
-    <app-game-score [side]="Side.PLAYER" [score]="score.player()" />
-    <app-game-controls />
-    <app-game-score [side]="Side.COMPUTER" [score]="score.computer()" />
+    <app-game-score class="player" [side]="Side.PLAYER" [score]="score.player()" />
+    <app-game-controls class="controls" />
+    <app-game-score class="computer" [side]="Side.COMPUTER" [score]="score.computer()" />
   </div>
 
   <app-game-grid />

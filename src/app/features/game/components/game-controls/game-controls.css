@@ -25,7 +25,7 @@
   padding: 0.5em 1em;
   border: 1px solid #ddd;
   border-radius: 0.5em;
-  width: 12ch;
+  width: 14ch;
   transition: border-color 0.3s;
 
   &:invalid {
