@@ -11,31 +11,26 @@
 
   &:hover:not(:disabled) {
     transform: scale(1.05);
-    box-shadow: 0 0.125em 0.5em rgba(0, 0, 0, 0.2);
-  }
-
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
 
   /* If we were using SCSS, we could assign colors in a loop based on a map configuration object other than hardcoding them here */
 
   &[data-status='untouched'] {
-    background: #3b82f6;
+    background: var(--color-untouched);
   }
 
   &[data-status='active'] {
-    background: #fbbf24;
+    background: var(--color-active);
     animation: pulse 0.5s infinite;
   }
 
   &[data-status='player'] {
-    background: #10b981;
+    background: var(--color-player);
   }
 
   &[data-status='computer'] {
-    background: #ef4444;
+    background: var(--color-computer);
   }
 }
 

@@ -1,16 +1,14 @@
 :host {
   display: grid;
+  justify-self: center;
   grid-template-columns: repeat(10, 1fr);
-  gap: 0.3125em;
-  aspect-ratio: 1;
-  max-width: 31.25em;
-  margin: 0 auto;
+  gap: 0.5em;
+  width: 100%;
+  max-width: 30em;
+}
 
-  @media (max-width: 600px) {
-    gap: 0.1875em;
-  }
-
-  @media (max-width: 400px) {
-    gap: 0.125em;
+@media (max-width: 600px) {
+  :host {
+    max-width: 25em;
   }
 }

@@ -1,81 +1,21 @@
 :host {
-  display: flex;
-  flex-direction: column;
-  gap: 2em;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
+  display: grid;
+  gap: 1em;
+  place-content: center;
 
-  /* @media (max-width: 600px) {
-    flex-direction: column;
-    align-items: stretch;
-  } */
+  /* color: var(color-text); */
 }
 
 .field {
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   gap: 1em;
-
-  label {
-    font-size: 0.9rem;
-    color: #555;
-    font-weight: 500;
-  }
 }
 
 .Timeout input {
-  padding: 0.625em 0.9375em;
-  border: 0.125em solid #ddd;
+  padding: 0.5em 1em;
+  border: 1px solid #ddd;
   border-radius: 0.5em;
-  font-size: 1rem;
-  width: 8ch;
+  width: 12ch;
   transition: border-color 0.3s;
-
-  &:focus {
-    outline: none;
-    border-color: #667eea;
-  }
-
-  &:disabled {
-    background: #f5f5f5;
-    cursor: not-allowed;
-  }
-
-  /* @media (max-width: 600px) {
-    width: 100%;
-  } */
-}
-
-.btn--start {
-  padding: 0.625em 1.875em;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 0.5em;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 0.3s,
-    transform 0.1s;
-
-  &:hover:not(:disabled) {
-    background: #5568d3;
-    transform: translateY(-0.125em);
-  }
-
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-
-  &:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-  }
-
-  /* @media (max-width: 600px) {
-    width: 100%;
-  } */
 }

@@ -7,6 +7,9 @@ import { Side } from '../../game.models';
   imports: [TitleCasePipe],
   templateUrl: './game-score.html',
   styleUrl: './game-score.css',
+  host: {
+    '[attr.data-side]': 'side()',
+  },
 })
 export class GameScore {
   side = input.required<Side>();

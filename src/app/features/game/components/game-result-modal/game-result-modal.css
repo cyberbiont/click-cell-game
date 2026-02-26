@@ -1,56 +1,33 @@
-h2 {
-  margin: 0 0 1.25em 0;
-  color: #333;
-  font-size: 2rem;
-
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
+:host {
+  &[data-winner='player'] .Winner {
+    color: var(--color-player);
   }
+
+  &[data-winner='computer'] .Winner {
+    color: var(--color-computer);
+  }
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
 }
 
 .Winner {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #667eea;
-  margin: 0 0 1.5625em 0;
-
-  @media (max-width: 600px) {
-    font-size: 1.2rem;
-  }
 }
 
 .FinalScore {
   background: #f8f9fa;
   padding: 1.25em;
   border-radius: 0.5em;
-  margin-bottom: 1.5625em;
 
-  p {
-    margin: 0.625em 0;
-    font-size: 1.1rem;
-    color: #555;
-  }
-}
+  font-size: 1.1rem;
+  color: #555;
 
-.btn--close {
-  padding: 0.75em 2.5em;
-  background: #667eea;
-  color: white;
-  border: none;
-  border-radius: 0.5em;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition:
-    background 0.3s,
-    transform 0.1s;
-
-  &:hover {
-    background: #5568d3;
-    transform: translateY(-0.125em);
-  }
-
-  &:active {
-    transform: translateY(0);
-  }
+  display: flex;
+  gap: 1em;
+  justify-content: space-evenly;
 }

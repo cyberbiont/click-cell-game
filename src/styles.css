@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+}
+
+input {
+  &:focus {
+    outline: none;
+    border-color: #667eea;
+  }
+
+  &:disabled {
+    background: #f5f5f5;
+  }
+}
+
+[disabled],
+.is-disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+  /* filter: grayscale(1); */
+  /* Prevents the button from changing color on hover */
+  pointer-events: auto;
+}
+
+button.btn {
+  padding: 0.625em 1.875em;
+  background: #667eea;
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.3s,
+    transform 0.1s;
+
+  &:hover:not(:disabled) {
+    background: #5568d3;
+    transform: scale(1.025);
+  }
+
+  &:disabled {
+    background: #ccc;
+  }
+}

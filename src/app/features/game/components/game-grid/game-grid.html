@@ -1,5 +1,5 @@
 @for (cell of this.cells; track cell.id) {
-  <app-game-grid-cell
+  <app-game-cell
     [cell]="cell"
     [isDisabled]="!isGameRoundActive()"
     (cellClicked)="handleCellClick($event)"

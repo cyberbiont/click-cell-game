@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
 import { GAME_CONFIG } from './features/game/game.config';
 
-export const routes: Routes = [
+export default [
   {
     path: '',
     loadComponent: () => import('./features/game/pages/game/game'),
@@ -11,9 +11,9 @@ export const routes: Routes = [
         useValue: {
           gridSize: 10,
           defaultTimeLimitMs: 1000,
-          winningScore: 10
-        }
-      }
-    ]
-  }
-];
+          winningScore: 10,
+        },
+      },
+    ],
+  },
+] satisfies Routes;

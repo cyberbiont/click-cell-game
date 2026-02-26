@@ -10,6 +10,9 @@ import { TitleCasePipe } from '@angular/common';
   imports: [ModalWrapper, TitleCasePipe],
   templateUrl: './game-result-modal.html',
   styleUrl: './game-result-modal.css',
+  host: {
+    '[attr.data-winner]': 'result().winner',
+  },
 })
 export class GameResultModal {
   private readonly gameService = inject(GameService);

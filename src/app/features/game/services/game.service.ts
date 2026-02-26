@@ -1,4 +1,4 @@
-import { GameCell, GameCellStatus, Side } from '../game.models';
+import { GameCellModel, GameCellStatus, Side } from '../game.models';
 import { Injectable, inject, signal } from '@angular/core';
 
 import { GAME_CONFIG } from '../game.config';
@@ -33,7 +33,7 @@ export class GameService {
   readonly isModalVisible = signal(false);
   readonly currentRoundResult = signal<GameRoundResult | null>(null);
 
-  private activeCell: GameCell | null = null;
+  private activeCell: GameCellModel | null = null;
   private timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
   startGame(timeLimit: number) {
@@ -61,12 +61,12 @@ export class GameService {
   private resetGame() {
     this.isModalVisible.set(false);
     this.currentRoundResult.set(null);
-    this.cells.forEach(cell => cell.status = GameCellStatus.UNTOUCHED);
+    this.cells.forEach((cell) => (cell.status = GameCellStatus.UNTOUCHED));
     this.score.player.set(0);
     this.score.computer.set(0);
   }
 
-  private initializeCells(): GameCell[] {
+  private initializeCells(): GameCellModel[] {
     return Array.from({ length: this.cfg.gridSize * this.cfg.gridSize }, (_, id) => ({
       id,
       status: GameCellStatus.UNTOUCHED,
@@ -86,7 +86,7 @@ export class GameService {
     this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
   }
 
-  handleCellClick(cell: GameCell) {
+  handleCellClick(cell: GameCellModel) {
     if (!this.activeCell || cell.status !== GameCellStatus.ACTIVE) return; // wrong cell clicked
     // we can also compare directly this.activeCell === cell
 
@@ -118,7 +118,7 @@ export class GameService {
     this.openModal();
   }
 
-  private updateCellStatus(cell: GameCell, status: GameCellStatus) {
+  private updateCellStatus(cell: GameCellModel, status: GameCellStatus) {
     cell.status = status;
   }
 

@@ -2,21 +2,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3125em;
-}
+  gap: 0.5em;
 
-.label {
-  font-size: 0.9rem;
-  color: #666;
-  font-weight: 500;
+  &[data-side='player'] .value {
+    color: var(--color-player);
+  }
+
+  &[data-side='computer'] .value {
+    color: var(--color-computer);
+  }
 }
 
 .value {
   font-size: 2rem;
   font-weight: 700;
-  color: #667eea;
-
-  @media (max-width: 600px) {
-    font-size: 1.5rem;
-  }
 }

@@ -10,7 +10,7 @@ export enum GameCellStatus {
   COMPUTER = 'computer',
 }
 
-export interface GameCell {
+export interface GameCellModel {
   id: number;
   status: GameCellStatus;
 }
