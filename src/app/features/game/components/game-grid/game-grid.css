@@ -1,4 +1,4 @@
-.grid {
+:host {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
   gap: 0.3125em;

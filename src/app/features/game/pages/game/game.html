@@ -9,5 +9,7 @@
 
   <app-game-grid />
 
-  <app-game-results-modal />
+  @if (isModalVisible()) {
+    <app-game-results-modal />
+  }
 </div>

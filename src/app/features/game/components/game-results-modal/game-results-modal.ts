@@ -10,7 +10,6 @@ import { GameService } from '../../services/game.service';
 export class GameResultsModal {
   private readonly gameService = inject(GameService);
 
-  protected readonly isVisible = this.gameService.isModalVisible;
   protected readonly winner = this.gameService.winner;
   protected readonly score = this.gameService.score;
 

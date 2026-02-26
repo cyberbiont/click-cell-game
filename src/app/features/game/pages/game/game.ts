@@ -18,4 +18,5 @@ export default class Game {
 
   protected readonly Side = Side;
   protected readonly score = this.gameService.score;
+  protected readonly isModalVisible = this.gameService.isModalVisible;
 }

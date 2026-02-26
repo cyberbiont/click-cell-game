@@ -1,9 +1,7 @@
-<div class="grid">
-  @for (cell of this.cells(); track cell.id) {
-    <app-game-grid-cell
-      [cell]="cell"
-      [isDisabled]="!isGameActive()"
-      (cellClicked)="onCellClick($event)"
-    />
-  }
-</div>
+@for (cell of this.cells(); track cell.id) {
+  <app-game-grid-cell
+    [cell]="cell"
+    [isDisabled]="!isGameActive()"
+    (cellClicked)="onCellClick($event)"
+  />
+}

@@ -1,18 +1,16 @@
-<div class="controls">
-  <div class="input-group">
-    <label for="timeInput">Time (ms):</label>
+<div class="Timeout field">
+  <label for="timeInput">Timeout (ms):</label>
 
-    <input
-      id="timeInput"
-      type="number"
-      [(ngModel)]="timeLimit"
-      [disabled]="isGameActive()"
-      min="1"
-      placeholder="Enter milliseconds"
-    />
-  </div>
-
-  <button class="start-btn" type="button" (click)="onStart()" [disabled]="isGameActive()">
-    Start
-  </button>
+  <input
+    id="timeInput"
+    type="number"
+    [(ngModel)]="timeLimit"
+    [disabled]="isGameActive()"
+    min="1"
+    placeholder="Enter timeout in milliseconds"
+  />
 </div>
+
+<button class="btn--start" type="button" (click)="onStart()" [disabled]="isGameActive()">
+  Start
+</button>
