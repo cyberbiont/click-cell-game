@@ -1,0 +1,35 @@
+:host {
+  font-size: 1.25em;
+}
+
+h2 {
+  margin: unset;
+  color: #0284c7;
+}
+
+ol {
+  margin: unset;
+  display: grid;
+  gap: 1em;
+  text-align: left;
+}
+
+.colored {
+  font-weight: 600;
+
+  &.--active {
+    color: var(--color-active);
+  }
+
+  &.--player {
+    color: var(--color-player);
+  }
+
+  &.--computer {
+    color: var(--color-computer);
+  }
+}
+
+.btn--close {
+  justify-self: center;
+}

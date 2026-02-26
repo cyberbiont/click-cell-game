@@ -48,6 +48,7 @@ Score display (Player vs Computer)
 
 The game is configurable using GAME_CONFIG injection token. You can set grid size, timeout limits, default timeout and the score user has to reach to win. Config is validated
 Timeout input is validated to fit the specified limits.
+'Rules' buutton thet shows game rules in a dedicated modal.
 Errors handling with toast window displayed to the user.
 A vbon to show the rules to the user run a modal window.
 Results history ans statistics (to be impplemented)

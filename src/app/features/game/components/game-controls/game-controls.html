@@ -32,12 +32,27 @@
     </div>
   </div>
 
-  <button
-    class="btn btn--start"
-    type="submit"
-    [disabled]="isGameActive() || gameForm.invalid"
-    aria-label="Start game"
-  >
-    Start
-  </button>
+  <div class="buttons">
+    <button
+      class="btn btn--start"
+      type="submit"
+      [disabled]="isGameActive() || gameForm.invalid"
+      aria-label="Start game"
+    >
+      Start
+    </button>
+    <button
+      class="btn btn--rules"
+      type="button"
+      (click)="openRules()"
+      [disabled]="isGameActive()"
+      aria-label="Show game rules"
+    >
+      Rules
+    </button>
+  </div>
 </form>
+
+@if (showRules()) {
+  <app-game-rules-modal (closeRequested)="closeRules()" />
+}

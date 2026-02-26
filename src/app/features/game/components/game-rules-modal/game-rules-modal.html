@@ -1,0 +1,14 @@
+<app-modal-wrapper (closeRequested)="handleCloseRequest()">
+  <h2>How to Play:</h2>
+
+  <ol>
+    <li>Set the time limit (in milliseconds)</li>
+    <li>Click "Start Game"</li>
+    <li>A cell will turn <span class="colored --active">yellow</span> - click it before time runs out</li>
+    <li><span class="colored --player">Green</span> = You scored a point</li>
+    <li><span class="colored --computer">Red</span> = Computer scored a point</li>
+    <li>First to 10 points wins!</li>
+  </ol>
+
+  <button class="btn btn--close" type="button" (click)="handleCloseRequest()">OK</button>
+</app-modal-wrapper>

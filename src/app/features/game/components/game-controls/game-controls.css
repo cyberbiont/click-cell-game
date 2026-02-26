@@ -11,6 +11,11 @@
   flex-wrap: wrap;
 }
 
+.buttons {
+  display: flex;
+  gap: 1em;
+}
+
 .input--validated {
   position: relative;
 }
@@ -59,5 +64,14 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+.btn--rules {
+  background: #6b7280;
+  /* transform: scale(0.75); */
+
+  &:hover:not(:disabled) {
+    background: #4b5563;
   }
 }
