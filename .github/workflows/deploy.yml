@@ -26,7 +26,7 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href=/hit-the-cell-game/
+        run: npm run build -- --base-href=/click-cell-game/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
