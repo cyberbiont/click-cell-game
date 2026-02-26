@@ -13,8 +13,8 @@ import { GameService } from '../../services/game.service';
 export class GameGrid {
   private readonly gameService = inject(GameService);
 
-  protected cells = this.gameService.cells;
-  protected isGameActive = this.gameService.isGameActive;
+  protected readonly cells = this.gameService.cells;
+  protected readonly isGameActive = this.gameService.isGameActive;
 
   onCellClick(cell: GameCell) {
     this.gameService.handleCellClick(cell);

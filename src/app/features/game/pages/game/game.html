@@ -1,7 +1,11 @@
 <div class="game-container">
-  <h1>Mini-Game</h1>
-  
-  <app-game-controls />
+  <!-- <h1>Mini-Game</h1> -->
+
+  <div class="score-board">
+    <app-game-score [side]="Side.PLAYER" [score]="score.player()" />
+    <app-game-controls />
+    <app-game-score [side]="Side.COMPUTER" [score]="score.computer()" />
+  </div>
 
   <app-game-grid />
 
