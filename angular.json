@@ -5,7 +5,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "test-task-game-q": {
+    "click-cell-game": {
       "architect": {
         "build": {
           "builder": "@angular/build:application",
