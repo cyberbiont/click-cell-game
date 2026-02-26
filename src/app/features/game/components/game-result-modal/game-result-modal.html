@@ -1,7 +1,7 @@
 <app-modal-wrapper (closeRequested)="handleCloseRequest()">
   <h2>Game Over!</h2>
 
-  <p class="WinnerText">{{ result().winner | titlecase }} wins!</p>
+  <p class="Winner">{{ result().winner | titlecase }} wins!</p>
 
   <div class="FinalScore">
     <p>{{ Side.PLAYER | titlecase }}: {{ result().score.player }}</p>

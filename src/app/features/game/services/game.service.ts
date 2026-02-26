@@ -31,10 +31,10 @@ export class GameService {
   readonly isGameRoundActive = signal(false);
 
   readonly isModalVisible = signal(false);
-  readonly lastRoundResult = signal<GameRoundResult | null>(null);
+  readonly currentRoundResult = signal<GameRoundResult | null>(null);
 
-  private currentCell = -1;
-  private timer: any;
+  private activeCellId = -1;
+  private timer: ReturnType<typeof setTimeout> | undefined = undefined;
 
   startGame(timeLimit: number) {
     this.timeLimit.set(timeLimit);
@@ -54,13 +54,14 @@ export class GameService {
     if (cell.status !== GameCellStatus.ACTIVE) return;
 
     clearTimeout(this.timer);
+
     const newCells = [...this.cells()];
     newCells[cell.id] = { ...newCells[cell.id], status: GameCellStatus.PLAYER };
     this.cells.set(newCells);
     this.score.player.update((s) => s + 1);
 
     if (this.score.player() === this.cfg.winningScore) {
-      this.endGame({
+      this.endGameRound({
         winner: Side.PLAYER,
         score: this.getFinalScore(),
       });
@@ -79,6 +80,7 @@ export class GameService {
 
   private resetGame() {
     this.isModalVisible.set(false);
+    this.currentRoundResult.set(null);
     this.cells.set(this.initializeCells());
     this.score.player.set(0);
     this.score.computer.set(0);
@@ -100,24 +102,27 @@ export class GameService {
 
     if (availableCells.length === 0) return;
 
-    this.currentCell = getRandomArrayElement(availableCells);
+    this.activeCellId = getRandomArrayElement(availableCells);
     const newCells = [...this.cells()];
-    newCells[this.currentCell] = { ...newCells[this.currentCell], status: GameCellStatus.ACTIVE };
+    newCells[this.activeCellId] = { ...newCells[this.activeCellId], status: GameCellStatus.ACTIVE };
     this.cells.set(newCells);
 
     this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
   }
 
   private handleTimeout() {
-    if (this.currentCell === -1) return;
+    if (this.activeCellId === -1) return;
 
     const newCells = [...this.cells()];
-    newCells[this.currentCell] = { ...newCells[this.currentCell], status: GameCellStatus.COMPUTER };
+    newCells[this.activeCellId] = {
+      ...newCells[this.activeCellId],
+      status: GameCellStatus.COMPUTER,
+    };
     this.cells.set(newCells);
     this.score.computer.update((s) => s + 1);
 
     if (this.score.computer() === this.cfg.winningScore) {
-      this.endGame({
+      this.endGameRound({
         winner: Side.COMPUTER,
         score: this.getFinalScore(),
       });
@@ -126,11 +131,11 @@ export class GameService {
     }
   }
 
-  private endGame(result: GameRoundResult) {
+  private endGameRound(result: GameRoundResult) {
     this.isGameRoundActive.set(false);
     this.gameRoundsHistory.push(result);
 
-    this.lastRoundResult.set(result);
+    this.currentRoundResult.set(result);
     this.openModal();
     clearTimeout(this.timer);
   }

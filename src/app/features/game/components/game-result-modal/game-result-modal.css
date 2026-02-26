@@ -8,7 +8,7 @@ h2 {
   }
 }
 
-.WinnerText {
+.Winner {
   font-size: 1.5rem;
   font-weight: 700;
   color: #667eea;
@@ -41,7 +41,9 @@ h2 {
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.3s, transform 0.1s;
+  transition:
+    background 0.3s,
+    transform 0.1s;
 
   &:hover {
     background: #5568d3;

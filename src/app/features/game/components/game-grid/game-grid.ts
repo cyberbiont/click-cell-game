@@ -16,7 +16,7 @@ export class GameGrid {
   protected readonly cells = this.gameService.cells;
   protected readonly isGameRoundActive = this.gameService.isGameRoundActive;
 
-  onCellClick(cell: GameCell) {
+  handleCellClick(cell: GameCell) {
     this.gameService.handleCellClick(cell);
   }
 }
