@@ -6,8 +6,8 @@ import routes from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideBrowserGlobalErrorListeners(),
+    provideBrowserGlobalErrorListeners(), // uses DefaultErrorHandler which only does console.error()
+    { provide: ErrorHandler, useClass: GlobalErrorHandler }, // custom error handler to show errors to user
     provideRouter(routes),
-    { provide: ErrorHandler, useClass: GlobalErrorHandler },
   ],
 };
