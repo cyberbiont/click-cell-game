@@ -1,7 +1,7 @@
+import { GAME_CONFIG, GameConfig } from '../game.config';
 import { GameCellModel, GameCellStatus, Side } from '../game.models';
-import { Injectable, inject, signal } from '@angular/core';
+import { Injectable, inject, isDevMode, signal } from '@angular/core';
 
-import { GAME_CONFIG } from '../game.config';
 import { getRandomArrayElement } from '@core/utils/helpers';
 
 export type GameRoundResult = {
@@ -15,7 +15,7 @@ export type GameRoundResult = {
 
 @Injectable()
 export class GameService {
-  private readonly cfg = inject(GAME_CONFIG);
+  private readonly cfg = this.validateConfig(inject(GAME_CONFIG));
 
   readonly cells = this.initializeCells();
 
@@ -136,5 +136,35 @@ export class GameService {
     } else {
       this.highlightRandomCell();
     }
+  }
+
+  /**
+   * Validates and sanitizes game configuration values.
+   * Ensures gridSize and winningScore are positive integers, and defaultTimeLimitMs meets minimum threshold.
+   * Invalid values are replaced with safe defaults. Logs a warning in development mode when corrections are made.
+   */
+  private validateConfig(config: GameConfig): GameConfig {
+    const gridSize = Number.isInteger(config.gridSize) && config.gridSize >= 1 ? config.gridSize : 5;
+    const defaultTimeLimitMs = config.defaultTimeLimitMs >= 100 ? config.defaultTimeLimitMs : 1000;
+    const maxScore = gridSize * gridSize;
+    const winningScore = Number.isInteger(config.winningScore) && config.winningScore >= 1 && config.winningScore <= maxScore
+      ? config.winningScore
+      : 10;
+
+    const validated = { gridSize, defaultTimeLimitMs, winningScore };
+
+    if (
+      isDevMode() &&
+      (config.gridSize !== gridSize ||
+        config.defaultTimeLimitMs !== defaultTimeLimitMs ||
+        config.winningScore !== winningScore)
+    ) {
+      console.warn(
+        '[GameConfig] Some of the provided config values were not valid and set to safe defaults:',
+        { provided: config, corrected: validated },
+      );
+    }
+
+    return validated;
   }
 }
