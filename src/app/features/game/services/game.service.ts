@@ -17,7 +17,7 @@ export type GameRoundResult = {
 export class GameService {
   private readonly cfg = inject(GAME_CONFIG);
 
-  readonly cells = signal<GameCell[]>(this.initializeCells());
+  readonly cells = this.initializeCells();
 
   readonly score = {
     player: signal(0),
@@ -50,7 +50,7 @@ export class GameService {
     };
   }
 
-  openModal() {
+  private openModal() {
     this.isModalVisible.set(true);
   }
 
@@ -61,7 +61,7 @@ export class GameService {
   private resetGame() {
     this.isModalVisible.set(false);
     this.currentRoundResult.set(null);
-    this.cells.set(this.initializeCells());
+    this.cells.forEach(cell => cell.status = GameCellStatus.UNTOUCHED);
     this.score.player.set(0);
     this.score.computer.set(0);
   }
@@ -76,57 +76,35 @@ export class GameService {
   private highlightRandomCell() {
     if (!this.isGameRoundActive()) return;
 
-    const availableCells = this.cells().filter((cell) => cell.status === GameCellStatus.UNTOUCHED);
+    const availableCells = this.cells.filter((cell) => cell.status === GameCellStatus.UNTOUCHED);
 
     if (availableCells.length === 0) return;
 
     this.activeCell = getRandomArrayElement(availableCells);
-
-    this.activeCell.status = GameCellStatus.ACTIVE;
-    this.cells.update((cells) => [...cells]); // trigger the signal
+    this.updateCellStatus(this.activeCell, GameCellStatus.ACTIVE);
 
     this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
   }
 
-  handleCellHit(cell: GameCell) {
+  handleCellClick(cell: GameCell) {
     if (!this.activeCell || cell.status !== GameCellStatus.ACTIVE) return; // wrong cell clicked
     // we can also compare directly this.activeCell === cell
 
     clearTimeout(this.timer);
 
-    this.activeCell.status = GameCellStatus.PLAYER;
-    this.cells.update((cells) => [...cells]); // trigger the signal
-
+    this.updateCellStatus(cell, GameCellStatus.PLAYER);
     this.score.player.update((s) => s + 1);
 
-    // check for win condition
-    if (this.score.player() === this.cfg.winningScore) {
-      this.endGameRound({
-        winner: Side.PLAYER,
-        score: this.getFinalScore(),
-      });
-    } else {
-      this.highlightRandomCell();
-    }
+    this.checkWinCondition();
   }
 
   private handleTimeout() {
     if (!this.activeCell) return;
 
-    this.activeCell.status = GameCellStatus.COMPUTER;
-    this.cells.update((cells) => [...cells]); // trigger the signal
-
+    this.updateCellStatus(this.activeCell, GameCellStatus.COMPUTER);
     this.score.computer.update((s) => s + 1);
 
-    // check for win condition
-    if (this.score.computer() === this.cfg.winningScore) {
-      this.endGameRound({
-        winner: Side.COMPUTER,
-        score: this.getFinalScore(),
-      });
-    } else {
-      this.highlightRandomCell();
-    }
+    this.checkWinCondition();
   }
 
   private endGameRound(result: GameRoundResult) {
@@ -138,5 +116,25 @@ export class GameService {
     clearTimeout(this.timer);
 
     this.openModal();
+  }
+
+  private updateCellStatus(cell: GameCell, status: GameCellStatus) {
+    cell.status = status;
+  }
+
+  private checkWinCondition() {
+    if (this.score.player() === this.cfg.winningScore) {
+      this.endGameRound({
+        winner: Side.PLAYER,
+        score: this.getFinalScore(),
+      });
+    } else if (this.score.computer() === this.cfg.winningScore) {
+      this.endGameRound({
+        winner: Side.COMPUTER,
+        score: this.getFinalScore(),
+      });
+    } else {
+      this.highlightRandomCell();
+    }
   }
 }

@@ -1,4 +1,4 @@
-@for (cell of this.cells(); track cell.id) {
+@for (cell of this.cells; track cell.id) {
   <app-game-grid-cell
     [cell]="cell"
     [isDisabled]="!isGameRoundActive()"
