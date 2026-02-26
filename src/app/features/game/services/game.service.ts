@@ -1,8 +1,7 @@
 import { GAME_CONFIG, GameConfig } from '../game.config';
 import { GameCellModel, GameCellStatus, Side } from '../game.models';
 import { Injectable, OnDestroy, inject, isDevMode, signal } from '@angular/core';
-
-import { getRandomArrayElement } from '@core/utils/helpers';
+import { getRandomArrayElement, isArrayNotEmpty } from '@core/utils/helpers';
 
 export type GameRoundResult = {
   winner: Side;
@@ -80,12 +79,12 @@ export class GameService implements OnDestroy {
 
     const availableCells = this.cells.filter((cell) => cell.status === GameCellStatus.UNTOUCHED);
 
-    if (availableCells.length === 0) return;
+    if (isArrayNotEmpty(availableCells)) {
+      this.activeCell = getRandomArrayElement(availableCells);
+      this.updateCellStatus(this.activeCell, GameCellStatus.ACTIVE);
 
-    this.activeCell = getRandomArrayElement(availableCells);
-    this.updateCellStatus(this.activeCell, GameCellStatus.ACTIVE);
-
-    this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
+      this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
+    }
   }
 
   handleCellClick(cell: GameCellModel) {
@@ -146,18 +145,29 @@ export class GameService implements OnDestroy {
    * Invalid values are replaced with safe defaults. Logs a warning in development mode when corrections are made.
    */
   private validateConfig(config: GameConfig): GameConfig {
-    const gridSize = Number.isInteger(config.gridSize) && config.gridSize >= 1 ? config.gridSize : 5;
+    const gridSize =
+      Number.isInteger(config.gridSize) && config.gridSize >= 1 ? config.gridSize : 10;
     const minTimeLimitMs = config.minTimeLimitMs >= 100 ? config.minTimeLimitMs : 100;
     const maxTimeLimitMs = config.maxTimeLimitMs >= minTimeLimitMs ? config.maxTimeLimitMs : 2000;
-    const defaultTimeLimitMs = config.defaultTimeLimitMs >= minTimeLimitMs && config.defaultTimeLimitMs <= maxTimeLimitMs
-      ? config.defaultTimeLimitMs
-      : 1000;
+    const defaultTimeLimitMs =
+      config.defaultTimeLimitMs >= minTimeLimitMs && config.defaultTimeLimitMs <= maxTimeLimitMs
+        ? config.defaultTimeLimitMs
+        : 1000;
     const maxScore = gridSize * gridSize;
-    const winningScore = Number.isInteger(config.winningScore) && config.winningScore >= 1 && config.winningScore <= maxScore
-      ? config.winningScore
-      : 10;
+    const winningScore =
+      Number.isInteger(config.winningScore) &&
+      config.winningScore >= 1 &&
+      config.winningScore <= maxScore
+        ? config.winningScore
+        : 10;
 
-    const validated = { gridSize, defaultTimeLimitMs, minTimeLimitMs, maxTimeLimitMs, winningScore };
+    const validated = {
+      gridSize,
+      defaultTimeLimitMs,
+      minTimeLimitMs,
+      maxTimeLimitMs,
+      winningScore,
+    };
 
     if (
       isDevMode() &&

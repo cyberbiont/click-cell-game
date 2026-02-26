@@ -1,4 +1,4 @@
-import { InjectionToken, isDevMode } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export interface GameConfig {
   gridSize: number;
@@ -9,20 +9,3 @@ export interface GameConfig {
 }
 
 export const GAME_CONFIG = new InjectionToken<GameConfig>('GAME_CONFIG');
-
-export function provideGameConfig(config: GameConfig) {
-  const gridSize = Math.max(1, Math.floor(config.gridSize)) || 5;
-  const minTimeLimitMs = Math.max(100, config.minTimeLimitMs) || 100;
-  const maxTimeLimitMs = Math.max(minTimeLimitMs, config.maxTimeLimitMs) || 2000;
-  const defaultTimeLimitMs = Math.min(Math.max(minTimeLimitMs, config.defaultTimeLimitMs), maxTimeLimitMs) || 1000;
-  const maxScore = gridSize * gridSize;
-  const winningScore = Math.min(Math.max(1, config.winningScore), maxScore) || 10;
-
-  const validated: GameConfig = { gridSize, defaultTimeLimitMs, minTimeLimitMs, maxTimeLimitMs, winningScore };
-
-  if (isDevMode() && JSON.stringify(config) !== JSON.stringify(validated)) {
-    console.warn('[GameConfig] Invalid config corrected:', { provided: config, corrected: validated });
-  }
-
-  return { provide: GAME_CONFIG, useValue: validated };
-}
