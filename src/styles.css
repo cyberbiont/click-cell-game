@@ -22,16 +22,9 @@ input {
 
   &:disabled {
     background: #f5f5f5;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
-}
-
-[disabled],
-.is-disabled {
-  cursor: not-allowed;
-  opacity: 0.6;
-  /* filter: grayscale(1); */
-  /* Prevents the button from changing color on hover */
-  pointer-events: auto;
 }
 
 button.btn {
@@ -54,5 +47,7 @@ button.btn {
 
   &:disabled {
     background: #ccc;
+    cursor: not-allowed;
+    opacity: 0.6;
   }
 }
