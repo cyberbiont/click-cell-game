@@ -11,10 +11,6 @@
   --color-untouched: #3b82f6;
   --color-active: #fbbf24;
   --color-text: #555;
-
-  @media (max-width: 600px) {
-    display: contents;
-  }
 }
 
 .Game {
