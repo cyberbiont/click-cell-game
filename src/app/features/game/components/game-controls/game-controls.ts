@@ -20,8 +20,6 @@ export class GameControls {
   protected readonly maxTimeout = this.config.maxTimeLimitMs;
 
   protected onStart() {
-    const validatedTimeLimit = Math.min(Math.max(this.minTimeout, this.timeLimit()), this.maxTimeout);
-    this.timeLimit.set(validatedTimeLimit);
-    this.gameService.startGame(validatedTimeLimit);
+    this.gameService.startGame(this.timeLimit());
   }
 }

@@ -16,16 +16,16 @@
         placeholder="Enter timeout in milliseconds"
       />
 
-      @if (timeLimitInput.invalid && timeLimitInput.touched) {
+      @if (timeLimitInput.invalid && (timeLimitInput.touched || timeLimitInput.dirty)) {
         <small class="error">
           @if (timeLimitInput.errors?.['required']) {
             Timeout is required
           }
           @if (timeLimitInput.errors?.['min']) {
-            Minimum value is {{ minTimeout }}ms
+            Minimum value is {{ minTimeout }} ms
           }
           @if (timeLimitInput.errors?.['max']) {
-            Maximum value is {{ maxTimeout }}ms
+            Maximum value is {{ maxTimeout }} ms
           }
         </small>
       }
