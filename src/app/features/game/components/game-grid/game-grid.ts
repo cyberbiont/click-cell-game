@@ -9,6 +9,10 @@ import { GameService } from '../../services/game.service';
   imports: [GameCell],
   templateUrl: './game-grid.html',
   styleUrl: './game-grid.css',
+  host: {
+    'role': 'grid',
+    'aria-label': 'Game board'
+  }
 })
 export class GameGrid {
   private readonly gameService = inject(GameService);

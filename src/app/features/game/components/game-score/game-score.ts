@@ -9,6 +9,8 @@ import { Side } from '../../game.models';
   styleUrl: './game-score.css',
   host: {
     '[attr.data-side]': 'side()',
+    'role': 'status',
+    '[attr.aria-label]': 'side() + " score"'
   },
 })
 export class GameScore {

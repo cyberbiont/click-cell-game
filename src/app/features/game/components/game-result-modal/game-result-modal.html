@@ -1,12 +1,19 @@
 <app-modal-wrapper (closeRequested)="handleCloseRequest()">
   <div class="title">Game Over!</div>
 
-  <div class="Winner">{{ result().winner | titlecase }} wins!</div>
+  <div class="Winner" role="status">{{ result().winner | titlecase }} wins!</div>
 
-  <div class="FinalScore">
+  <div class="FinalScore" aria-label="Final scores">
     <div>{{ Side.PLAYER | titlecase }}: {{ result().score.player }}</div>
     <div>{{ Side.COMPUTER | titlecase }}: {{ result().score.computer }}</div>
   </div>
 
-  <button class="btn btn--close" type="button" (click)="handleCloseRequest()">Close</button>
+  <button
+    class="btn btn--close"
+    type="button"
+    (click)="handleCloseRequest()"
+    aria-label="Close game result modal"
+  >
+    Close
+  </button>
 </app-modal-wrapper>
