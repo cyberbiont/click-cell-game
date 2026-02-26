@@ -1,88 +1,43 @@
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.modal {
-  background: white;
-  border-radius: 16px;
-  padding: 40px;
-  max-width: 400px;
-  width: 90%;
-  text-align: center;
-  animation: slideUp 0.3s;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-
-  h2 {
-    margin: 0 0 20px 0;
-    color: #333;
-    font-size: 2rem;
-  }
+h2 {
+  margin: 0 0 1.25em 0;
+  color: #333;
+  font-size: 2rem;
 
   @media (max-width: 600px) {
-    padding: 30px 20px;
-
-    h2 {
-      font-size: 1.5rem;
-    }
+    font-size: 1.5rem;
   }
 }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-.winner-text {
+.WinnerText {
   font-size: 1.5rem;
   font-weight: 700;
   color: #667eea;
-  margin: 0 0 25px 0;
+  margin: 0 0 1.5625em 0;
 
   @media (max-width: 600px) {
     font-size: 1.2rem;
   }
 }
 
-.final-score {
+.FinalScore {
   background: #f8f9fa;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 25px;
+  padding: 1.25em;
+  border-radius: 0.5em;
+  margin-bottom: 1.5625em;
 
   p {
-    margin: 10px 0;
+    margin: 0.625em 0;
     font-size: 1.1rem;
     color: #555;
   }
 }
 
-.close-btn {
-  padding: 12px 40px;
+.btn--close {
+  padding: 0.75em 2.5em;
   background: #667eea;
   color: white;
   border: none;
-  border-radius: 8px;
+  border-radius: 0.5em;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
@@ -90,7 +45,7 @@
 
   &:hover {
     background: #5568d3;
-    transform: translateY(-2px);
+    transform: translateY(-0.125em);
   }
 
   &:active {

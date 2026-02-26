@@ -1,0 +1,44 @@
+:host {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.modal {
+  background: white;
+  border-radius: 1em;
+  padding: 2.5em;
+  max-width: 25em;
+  width: 90%;
+  text-align: center;
+  animation: slideUp 0.3s;
+  box-shadow: 0 1.25em 3.75em rgba(0, 0, 0, 0.3);
+
+  @media (max-width: 600px) {
+    padding: 1.875em 1.25em;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(3.125em);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

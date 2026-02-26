@@ -6,38 +6,25 @@
   box-sizing: border-box;
 }
 
-.game-container {
+.Game {
   max-width: 37.5em;
   margin: 0 auto;
   background: white;
   border-radius: 1em;
-  padding: 1.875em;
+  padding: 1.875rem;
   box-shadow: 0 0.625em 2.5em rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 600px) {
+    padding: 1.25rem;
+  }
 }
 
-h1 {
-  text-align: center;
-  color: #333;
-  margin: 0 0 1.875em 0;
-  font-size: 2rem;
-}
-
-.score-board {
+.ScoreBoard {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   margin-bottom: 1.5625em;
   padding: 0.9375em;
   background: #f8f9fa;
   border-radius: 0.5em;
-}
-
-@media (max-width: 600px) {
-  .game-container {
-    padding: 1.25em;
-  }
-
-  h1 {
-    font-size: 1.5rem;
-    margin-bottom: 1.25em;
-  }
 }

@@ -1,14 +1,12 @@
-<div class="modal-overlay" (click)="onClose()">
-  <div class="modal" (click)="$event.stopPropagation()">
-    <h2>Game Over!</h2>
+<app-modal-wrapper (closeRequested)="handleCloseRequest()">
+  <h2>Game Over!</h2>
 
-    <p class="winner-text">{{ winner() }} Wins!</p>
+  <p class="WinnerText">{{ winner() | titlecase }} wins!</p>
 
-    <div class="final-score">
-      <p>Player: {{ score.player() }}</p>
-      <p>Computer: {{ score.computer() }}</p>
-    </div>
-
-    <button class="close-btn" (click)="onClose()">Close</button>
+  <div class="FinalScore">
+    <p>{{ Side.PLAYER | titlecase }}: {{ score.player() }}</p>
+    <p>{{ Side.COMPUTER | titlecase }}: {{ score.computer() }}</p>
   </div>
-</div>
+
+  <button class="btn--close" type="button" (click)="handleCloseRequest()">Close</button>
+</app-modal-wrapper>
