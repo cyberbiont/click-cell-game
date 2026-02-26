@@ -1,6 +1,7 @@
 {
-  "name": "test-task-game-q",
+  "name": "click-cell-game",
   "version": "0.0.0",
+  "author": "Yaroslav Larin",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
