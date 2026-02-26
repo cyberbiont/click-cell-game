@@ -1,5 +1,6 @@
 :host {
   display: grid;
+  align-content: center;
   grid-auto-rows: min-content;
   min-height: 100vh;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -21,7 +22,7 @@
   gap: 1rem;
   justify-self: center;
   width: calc(100% - 1em);
-  max-width: 40em;
+  max-width: 32em;
   background: white;
   border-radius: 1em;
   padding: 0.5rem;
