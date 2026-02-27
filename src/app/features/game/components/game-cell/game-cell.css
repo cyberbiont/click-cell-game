@@ -9,7 +9,12 @@
   padding: 0;
   width: 100%;
 
-  &:hover:not(:disabled) {
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &[data-status='untouched']:hover:not(:disabled),
+  &[data-status='active']:hover:not(:disabled) {
     transform: scale(1.05);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   }
