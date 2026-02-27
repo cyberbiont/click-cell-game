@@ -1,7 +1,7 @@
 @for (cell of this.cells; track cell.id) {
   <app-game-cell
     [cell]="cell"
-    [isDisabled]="!isGameRoundActive()"
+    [isDisabled]="!isGameActive()"
     (cellClicked)="handleCellClick($event)"
   />
 }

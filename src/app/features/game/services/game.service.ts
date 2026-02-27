@@ -1,7 +1,8 @@
 import { GAME_CONFIG, GameConfig } from '../game.config';
 import { GameCellModel, GameCellStatus, Side } from '../game.models';
 import { Injectable, OnDestroy, inject, isDevMode, signal } from '@angular/core';
-import { getRandomArrayElement, getRandomNumber, isArrayNotEmpty } from '@core/utils/helpers';
+
+import { getRandomNumber } from '@core/utils/helpers';
 
 export type GameResult = {
   winner: Side;
