@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { GameRoundResult, GameService } from '../../services/game.service';
+import { GameResult, GameService } from '../../services/game.service';
 
 import { ModalWrapper } from '@shared/components/modal-wrapper/modal-wrapper';
 import { Side } from '../../game.models';
@@ -19,7 +19,7 @@ export class GameResultModal {
 
   protected readonly Side = Side;
 
-  result = input.required<GameRoundResult>();
+  result = input.required<GameResult>();
 
   protected handleCloseRequest() {
     this.gameService.closeModal();

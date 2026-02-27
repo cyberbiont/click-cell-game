@@ -2,8 +2,8 @@ import { Component, inject, signal } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
 import { GAME_CONFIG } from '../../game.config';
-import { GameService } from '../../services/game.service';
 import { GameRulesModal } from '../game-rules-modal/game-rules-modal';
+import { GameService } from '../../services/game.service';
 
 @Component({
   selector: 'app-game-controls',
@@ -16,7 +16,7 @@ export class GameControls {
   private readonly config = inject(GAME_CONFIG);
 
   protected readonly timeLimit = signal(this.gameService.timeLimit());
-  protected readonly isGameActive = this.gameService.isGameRoundActive;
+  protected readonly isGameActive = this.gameService.isGameActive;
   protected readonly minTimeout = this.config.minTimeLimitMs;
   protected readonly maxTimeout = this.config.maxTimeLimitMs;
   protected readonly showRules = signal(false);

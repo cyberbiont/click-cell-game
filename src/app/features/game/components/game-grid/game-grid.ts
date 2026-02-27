@@ -10,15 +10,15 @@ import { GameService } from '../../services/game.service';
   templateUrl: './game-grid.html',
   styleUrl: './game-grid.css',
   host: {
-    'role': 'grid',
-    'aria-label': 'Game board'
-  }
+    role: 'grid',
+    'aria-label': 'Game board',
+  },
 })
 export class GameGrid {
   private readonly gameService = inject(GameService);
 
   protected readonly cells = this.gameService.cells;
-  protected readonly isGameRoundActive = this.gameService.isGameRoundActive;
+  protected readonly isGameActive = this.gameService.isGameActive;
 
   protected handleCellClick(cell: GameCellModel) {
     this.gameService.handleCellClick(cell);

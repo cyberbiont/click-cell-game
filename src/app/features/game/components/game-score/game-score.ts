@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { TitleCasePipe, UpperCasePipe } from '@angular/common';
 
 import { Side } from '../../game.models';
+import { UpperCasePipe } from '@angular/common';
 
 @Component({
   selector: 'app-game-score',

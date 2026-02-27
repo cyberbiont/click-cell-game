@@ -3,7 +3,7 @@ import { GameCellModel, GameCellStatus, Side } from '../game.models';
 import { Injectable, OnDestroy, inject, isDevMode, signal } from '@angular/core';
 import { getRandomArrayElement, isArrayNotEmpty } from '@core/utils/helpers';
 
-export type GameRoundResult = {
+export type GameResult = {
   winner: Side;
   score: {
     [Side.PLAYER]: number;
@@ -23,14 +23,14 @@ export class GameService implements OnDestroy {
     computer: signal(0),
   } as const;
 
-  readonly gameRoundsHistory: GameRoundResult[] = []; // TODO game rounds history can be used to calculate statistics, or calculate absolute winner based on who won 5 rounds first
+  readonly gamesHistory: GameResult[] = []; // TODO games history can be used to calculate statistics, or calculate absolute winner based on who won 5 rounds first
 
   readonly timeLimit = signal(this.cfg.defaultTimeLimitMs);
 
-  readonly isGameRoundActive = signal(false);
+  readonly isGameActive = signal(false);
 
   readonly isModalVisible = signal(false);
-  readonly currentRoundResult = signal<GameRoundResult | null>(null);
+  readonly currentGameResult = signal<GameResult | null>(null);
 
   private activeCell: GameCellModel | null = null;
   private timer: ReturnType<typeof setTimeout> | undefined = undefined;
@@ -39,7 +39,7 @@ export class GameService implements OnDestroy {
     this.clearTimer();
     this.timeLimit.set(timeLimit);
     this.resetGame();
-    this.isGameRoundActive.set(true);
+    this.isGameActive.set(true);
     this.highlightRandomCell();
   }
 
@@ -61,7 +61,7 @@ export class GameService implements OnDestroy {
   private resetGame() {
     this.clearTimer();
     this.isModalVisible.set(false);
-    this.currentRoundResult.set(null);
+    this.currentGameResult.set(null);
     this.cells.forEach((cell) => (cell.status = GameCellStatus.UNTOUCHED));
     this.score.player.set(0);
     this.score.computer.set(0);
@@ -75,7 +75,7 @@ export class GameService implements OnDestroy {
   }
 
   private highlightRandomCell() {
-    if (!this.isGameRoundActive()) return;
+    if (!this.isGameActive()) return;
 
     const availableCells = this.cells.filter((cell) => cell.status === GameCellStatus.UNTOUCHED);
 
@@ -108,11 +108,11 @@ export class GameService implements OnDestroy {
     this.checkWinCondition();
   }
 
-  private endGameRound(result: GameRoundResult) {
-    this.isGameRoundActive.set(false);
-    this.gameRoundsHistory.push(result);
+  private endGameRound(result: GameResult) {
+    this.isGameActive.set(false);
+    this.gamesHistory.push(result);
 
-    this.currentRoundResult.set(result);
+    this.currentGameResult.set(result);
 
     this.clearTimer();
 
