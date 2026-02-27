@@ -1,7 +1,7 @@
 import { GAME_CONFIG, GameConfig } from '../game.config';
 import { GameCellModel, GameCellStatus, Side } from '../game.models';
 import { Injectable, OnDestroy, inject, isDevMode, signal } from '@angular/core';
-import { getRandomArrayElement, isArrayNotEmpty } from '@core/utils/helpers';
+import { getRandomArrayElement, getRandomNumber, isArrayNotEmpty } from '@core/utils/helpers';
 
 export type GameResult = {
   winner: Side;
@@ -17,6 +17,7 @@ export class GameService implements OnDestroy {
   private readonly cfg = this.validateConfig(inject(GAME_CONFIG));
 
   readonly cells = this.initializeCells();
+  private untouchedCells = this.cloneCellsCollection(); // serves as a temporary live collection of available cells to select from
 
   readonly score = {
     player: signal(0),
@@ -58,11 +59,16 @@ export class GameService implements OnDestroy {
     this.isModalVisible.set(false);
   }
 
+  private cloneCellsCollection() {
+    return [...this.cells];
+  }
+
   private resetGame() {
     this.clearTimer();
     this.isModalVisible.set(false);
     this.currentGameResult.set(null);
     this.cells.forEach((cell) => (cell.status = GameCellStatus.UNTOUCHED));
+    this.untouchedCells = this.cloneCellsCollection();
     this.score.player.set(0);
     this.score.computer.set(0);
   }
@@ -77,10 +83,17 @@ export class GameService implements OnDestroy {
   private highlightRandomCell() {
     if (!this.isGameActive()) return;
 
-    const availableCells = this.cells.filter((cell) => cell.status === GameCellStatus.UNTOUCHED);
+    if (this.untouchedCells.length > 0) {
+      const randomIndex = getRandomNumber(this.untouchedCells.length);
+      this.activeCell = this.untouchedCells[randomIndex];
 
-    if (isArrayNotEmpty(availableCells)) {
-      this.activeCell = getRandomArrayElement(availableCells);
+      {
+        // remove activated element. swap and pop method reduces operation cost to O(1) and is more effective them using splice for deletion
+        // we don't care about order of elements cause original cells collection is used to output the elements on page
+        this.untouchedCells[randomIndex] = this.untouchedCells[this.untouchedCells.length - 1];
+        this.untouchedCells.pop();
+      }
+
       this.updateCellStatus(this.activeCell, GameCellStatus.ACTIVE);
 
       this.timer = setTimeout(() => this.handleTimeout(), this.timeLimit());
